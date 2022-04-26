@@ -1,0 +1,42 @@
+# version: '3'
+# services:
+#   python3:
+#     restart: always
+#     build: .
+#     container_name: 'python3'
+#     tty: true
+#     #下が大事。ローカルのoptとコンテナ内のroot/optが同期したということを示している。
+#     volumes:
+#     - ./opt:/root/opt
+#     ports:
+#       - "127.0.0.1:8080:80"
+
+
+version: '3'
+#アプリケーションを動かす各要素のこと
+services:
+  jupyterlab:
+    restart: always
+    build: .
+    container_name: jupyterlab
+    tty: true
+    volumes:
+      - ./opt:/root/opt
+    ports: 
+      - '8080:8080'
+    #トークンなしでjupyterlabを開けるようにする。
+    command: jupyter-lab --ip 0.0.0.0 --port=8080 --allow-root --no-browser --NotebookApp.token=''
+
+  stremlit:
+    restart: always
+    build: .
+    container_name: stremlit
+    tty: true
+    volumes: 
+      - ./opt:/root/opt
+    ports: 
+      - '8501:8501'
+
+
+
+
